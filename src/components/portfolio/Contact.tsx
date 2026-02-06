@@ -75,14 +75,42 @@ export function Contact() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    try {
+      const formData = new FormData(e.target as HTMLFormElement)
+      const data = Object.fromEntries(formData.entries())
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      const response = await fetch("https://formsubmit.co/ajax/asimsafeer75@gmail.com", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
 
-    // Reset after showing success
-    setTimeout(() => setIsSubmitted(false), 3000)
+      if (!response.ok) throw new Error('Failed to send message')
+
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+
+      // Reset form
+      const form = e.target as HTMLFormElement
+      form.reset()
+
+      // Reset success message after delay
+      setTimeout(() => setIsSubmitted(false), 5000)
+    } catch (error) {
+      console.error('Error sending message:', error)
+      setIsSubmitting(false)
+      // Fallback to mailto if AJAX fails
+      const form = e.target as HTMLFormElement
+      const formData = new FormData(form)
+      const name = formData.get('name') as string
+      const email = formData.get('email') as string
+      const message = formData.get('message') as string
+
+      window.location.href = `mailto:asimsafeer75@gmail.com?subject=Portfolio Contact&body=Name: ${encodeURIComponent(name)}%0D%0AEmail: ${encodeURIComponent(email)}%0D%0A%0D%0A${encodeURIComponent(message)}`
+    }
   }
 
   const contactInfo = [
