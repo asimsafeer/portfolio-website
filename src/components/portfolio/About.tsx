@@ -7,7 +7,8 @@ const technicalSkills = [
   "Flutter & Dart", "Android (Java / Kotlin)", "Swift & SwiftUI",
   "Next.js / React / TypeScript", "Python & ML / Data Science",
   "Firebase", "SQLite / Drift", "Riverpod / Provider", "REST APIs",
-  "Git & Version Control", "Figma & UI/UX Design", "Agile & Scrum"
+  "Git & Version Control", "Figma & UI/UX Design", "Agile & Scrum",
+  "Task Tracking (Jira, Asana, Trello, Notion)"
 ]
 
 const managerialSkills = [
