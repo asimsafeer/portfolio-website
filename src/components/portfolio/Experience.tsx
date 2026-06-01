@@ -6,18 +6,16 @@ import { useRef } from "react"
 
 const experiences = [
   {
-    role: "Project Manager & Coordinator",
+    role: "Project Manager, Product Coordinator & Developer",
     company: "Creative Engineering & Management Services",
     period: "August 2024 – Present",
     location: "Peshawar, Pakistan",
-    description: "Led end-to-end development of digital solutions, from vendor selection to final delivery, ensuring alignment with company goals.",
+    description: "Led digital product delivery while contributing directly to mobile app, web platform, UI/UX, reporting, and launch workflows.",
     highlights: [
-      "Led end-to-end development of a mobile application and website, from vendor selection to final delivery, ensuring alignment with company goals.",
-      "Researched and shortlisted software companies evaluated proposals and coordinated contracts for app development.",
-      "Managed all project phases including UI/UX approvals, feature reviews and multi-team collaboration.",
-      "Oversaw timelines, tracked progress, identified risks and implemented solutions to keep projects on schedule.",
-      "Acted as the primary liaison between internal stakeholders and development teams, facilitating clear communication and timely decision-making.",
-      "Successfully drove the project independently after handover from the company, leading meetings, monitoring progress and ensuring delivery quality."
+      "Built and coordinated Flutter and Laravel products for poultry operations, marketplace workflows, feed calculation, reporting, and farmer-facing tools.",
+      "Translated business requirements into screens, data flows, feature lists, sprint tasks, and release priorities across app and web teams.",
+      "Designed UI/UX in Figma and implemented mobile interfaces with Flutter, Firebase, PDF generation, notifications, and local storage patterns.",
+      "Managed timelines, QA feedback, stakeholder reviews, risk tracking, and handover documentation to keep delivery aligned with company goals."
     ]
   },
   {
@@ -62,14 +60,14 @@ const experiences = [
     ]
   },
   {
-    role: "Final Year Project: Poul3y",
+    role: "Flutter Developer & UI/UX Lead | Poul3y",
     company: "City University of Science & Information Technology",
     period: "October 2024 – June 2025",
     location: "Peshawar, Pakistan",
-    description: "Conceptualized, designed, and developed the Poul3y App, a digital platform for modernizing poultry industry management.",
+    description: "Conceptualized, designed, and developed a digital platform for modernizing poultry industry management.",
     highlights: [
-      "Collaborated with a teammate to conceptualized, designed, and developed the Poul3y App, a digital platform aimed at modernizing poultry industry management through real-time data access, disease tracking, and resource planning.",
-      "Managed all phases of the project lifecycle from user requirement gathering to UI/UX design, development, and testing using Flutter and GitHub.",
+      "Collaborated with a teammate to design and develop Poul3y for real-time poultry data access, disease tracking, resource planning, and operational reporting.",
+      "Managed the lifecycle from user requirement gathering to Figma UI/UX, Flutter development, GitHub collaboration, testing, and pilot preparation.",
       "Conducted stakeholder interviews and field research to align app features with real-world needs.",
       "Reduced development time by 15% through efficient sprint planning and collaborative coding practices.",
       "Successfully deployed a pilot version, with 50+ users testing functionality in real market scenarios."

@@ -4,15 +4,15 @@ import { motion, useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 
 const technicalSkills = [
-  "Agile & Scrum", "Timeline & Task Tracking", "Jira / Asana / Trello",
-  "Notion & Click-up", "Data Analysis & Reporting", "Digital Project Delivery",
-  "UI/UX Design", "Flutter & GitHub", "Financial Auditing", "Digital Marketing"
+  "Flutter", "Dart", "Firebase", "Laravel", "PHP", "Next.js",
+  "TypeScript", "SQLite / Drift", "Riverpod / Provider", "REST APIs",
+  "PDF & Excel Exports", "Figma UI/UX", "GitHub", "Agile Delivery"
 ]
 
 const managerialSkills = [
-  "Project Management", "Team Collaboration", "Process Improvement",
-  "Executive Support", "Stakeholder Management", "Risk Management",
-  "Administrative Planning", "Problem Solving", "Strategic Planning"
+  "Project Management", "Product Planning", "Stakeholder Management",
+  "Sprint Planning", "Team Collaboration", "Risk Management",
+  "Requirement Gathering", "Documentation", "Problem Solving"
 ]
 
 const containerVariants = {
@@ -84,9 +84,9 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                I&apos;m a proactive Project Manager & Lead Project Coordinator with experience supporting senior leadership
-                and driving cross-functional projects. I specialize in managing timelines, dashboards and executive
-                documentation while liaising with internal and external stakeholders.
+                I&apos;m a Computer Science graduate and project coordinator who has moved deeply into hands-on product
+                development. I build Flutter mobile apps, Laravel admin platforms, and Next.js web products while keeping
+                the delivery discipline I learned from coordinating real teams and client work.
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -94,9 +94,9 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                Key contributor to digital solutions like the Poul3y App, handling UI/UX, project tracking and
-                multi-team collaboration. Adept at risk management, agile execution and maintaining
-                confidentiality, committed to ensuring smooth operations and timely project delivery.
+                My strongest work sits where product thinking and implementation meet: Poul3y, Poultry Calculator,
+                Flock Manager, EduX, Nimbus AI, Sensor Fusion, and supporting dashboards. I handle UI/UX, app architecture,
+                feature planning, testing, documentation, and launch-ready presentation.
               </motion.p>
 
               <motion.div
@@ -252,7 +252,7 @@ export function About() {
                 className="absolute bottom-0 left-0 right-0 p-6 z-20"
               >
                 <p className="text-white font-semibold text-lg">Aasim Safeer</p>
-                <p className="text-white/70 text-sm">Project Manager & Lead Coordinator</p>
+                <p className="text-white/70 text-sm">Flutter Developer & Product Coordinator</p>
               </motion.div>
 
               <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/20 pointer-events-none" />

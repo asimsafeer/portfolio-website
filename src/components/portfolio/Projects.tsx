@@ -213,8 +213,8 @@ export function Projects() {
             viewport={{ once: true }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto"
           >
-            A diverse collection of projects spanning software development,
-            cinematic videography, and strategic graphic design.
+            A practical collection of Flutter apps, Laravel platforms, Next.js products,
+            UI/UX systems, and supporting creative work.
           </motion.p>
         </div>
 

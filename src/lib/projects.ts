@@ -21,8 +21,11 @@ export const projects: Project[] = [
   {
     id: "poul3y",
     title: "Poul3y App",
-    description: "A comprehensive digital platform for modern poultry industry management. Features real-time data access, disease tracking, and resource planning to optimize farm operations.",
+    description: "A poultry management platform built with Flutter and Firebase-backed workflows for flock records, disease tracking, resource planning, PDF reports, and farmer-focused operational dashboards.",
     image: "/assets/portfolio/AasimSafeer-Portfolio/Poul3y App/Poul3y Logo.png",
+    images: [
+      "/assets/projects/poul3y-ui/cover.png"
+    ],
     tags: ["Flutter", "UI/UX", "Mobile App", "Figma"],
     link: "https://www.figma.com/proto/DlvNVRULKgxqMXLcuGbKaT/Poul3y?t=atrFCjSIZ2aDvBzX-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&node-id=69-12885&starting-point-node-id=69%3A12885",
     github: "#",
@@ -33,18 +36,146 @@ export const projects: Project[] = [
   {
     id: "poultry-calculator",
     title: "Poultry Calculator",
-    description: "A specialized utility app for poultry farmers to calculate feed ratios, growth projections, and resource requirements with precision.",
+    description: "A production Flutter utility for poultry feed estimation with broiler/layer calculations, generated receipts, sharing/export flows, localization, Firebase analytics, notifications, and ad monetization.",
     image: "/assets/portfolio/AasimSafeer-Portfolio/Poultry Calculator App/Poultry Calculator Logo.png",
     images: [
+      "/assets/projects/poultry-calculator-ui/cover.png",
       "/assets/portfolio/AasimSafeer-Portfolio/Poultry Calculator App/UI Design/Screenshot 2026-01-08 at 1.05.30 PM.png",
       "/assets/portfolio/AasimSafeer-Portfolio/Poultry Calculator App/UI Design/Screenshot 2026-01-08 at 1.03.55 PM.png"
     ],
-    tags: ["Flutter", "Utility", "Calculator", "Figma"],
+    tags: ["Flutter", "Firebase", "PDF", "Figma"],
     link: "https://www.figma.com/proto/o0QdbJi1Tqc0cSyW93V6E3/Poul3y-Calculator?node-id=1-1705&p=f&t=B2mmt5PBqMDExhEy-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
     github: "#",
     category: "software",
     featured: true,
     color: "from-blue-500/20 to-cyan-500/20"
+  },
+  {
+    id: "flock-manager",
+    title: "Flock Manager",
+    description: "A poultry flock operations system across Flutter and Laravel, covering flock setup, mortality, feed, vaccine, medicine, warehouse items, catching, recoveries, reporting, and shared access workflows.",
+    image: "/assets/portfolio/AasimSafeer-Portfolio/Poul3y App/Poul3y Logo.png",
+    tags: ["Flutter", "Laravel", "Firebase", "Reports"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: true,
+    color: "from-orange-500/20 to-amber-500/20"
+  },
+  {
+    id: "edux",
+    title: "EduX School Management",
+    description: "An offline-first Flutter school management system with Drift/SQLite data storage, attendance, fees, exams, expenses, canteen, guardian/staff modules, reporting, exports, and local sync services.",
+    image: "/assets/projects/offline-resume/cover.png",
+    tags: ["Flutter", "Drift", "SQLite", "Riverpod"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: true,
+    color: "from-sky-500/20 to-indigo-500/20"
+  },
+  {
+    id: "nimbus-ai",
+    title: "Nimbus AI",
+    description: "An offline on-device AI assistant powered by Gemma with local chat, voice input, image/vision features, Drift persistence, model download management, and privacy-first mobile architecture.",
+    image: "/assets/projects/promptly/cover.png",
+    tags: ["Flutter", "Gemma", "Drift", "AI"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: true,
+    color: "from-violet-500/20 to-cyan-500/20"
+  },
+  {
+    id: "sensor-fusion",
+    title: "Sensor Fusion",
+    description: "A Flutter Android app for real-time sensor streaming using motion, GPS, BLE, microphone, light, and proximity data, with HTTP/MQTT transport, live charts, background service, and a Python server.",
+    image: "/assets/projects/sensor-fusion/cover.jpg",
+    tags: ["Flutter", "MQTT", "HTTP", "Sensors"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-teal-500/20 to-blue-500/20"
+  },
+  {
+    id: "boot-alarm",
+    title: "BootAlarm",
+    description: "An offline-first Flutter alarm app where programmers answer MCQs to dismiss alarms, with local SQLite question packs, adaptive difficulty, progress tracking, custom animations, and anti-cheat timing.",
+    image: "/assets/projects/boot-alarm/cover.png",
+    tags: ["Flutter", "SQLite", "Provider", "UX"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-indigo-500/20 to-fuchsia-500/20"
+  },
+  {
+    id: "freezer",
+    title: "Freezer",
+    description: "A Play Store-conscious Flutter Android utility using Kotlin platform channels, local VPN controls, notification suppression, app schedules, profiles, activity logs, and local Hive storage.",
+    image: "/assets/projects/freezer/cover.png",
+    tags: ["Flutter", "Kotlin", "Riverpod", "Hive"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-cyan-500/20 to-slate-500/20"
+  },
+  {
+    id: "promptly",
+    title: "Promptly",
+    description: "A Flutter prompt library and discovery app with authentication, admin tools, favorites, search, profile management, shared providers, and polished marketplace-style UI screens.",
+    image: "/assets/projects/promptly/cover.png",
+    images: [
+      "/assets/projects/promptly/screen-1.png"
+    ],
+    tags: ["Flutter", "Firebase", "Search", "Admin"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-rose-500/20 to-violet-500/20"
+  },
+  {
+    id: "scriptflow",
+    title: "ScriptFlow",
+    description: "A Flutter writing and practice tool with script management, editor workflows, speech/overlay controls, backups, file services, onboarding, and a structured local data layer.",
+    image: "/assets/projects/scriptflow/cover.png",
+    tags: ["Flutter", "Editor", "Speech", "Backup"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-purple-500/20 to-blue-500/20"
+  },
+  {
+    id: "offline-resume",
+    title: "Offline Resume Builder",
+    description: "A Flutter and Next.js resume-building product for creating professional CVs offline, generating PDF output, managing templates, adding images, and sharing finalized documents.",
+    image: "/assets/projects/offline-resume/cover.png",
+    tags: ["Flutter", "Next.js", "PDF", "Templates"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-stone-500/20 to-sky-500/20"
+  },
+  {
+    id: "dice-and-dares",
+    title: "Dice & Dares",
+    description: "A playful Flutter party game with game modes, player setup, animated dice flows, truth/dare content, theme screens, AI prompt concepts, and store-ready visual assets.",
+    image: "/assets/projects/dice-and-dares/cover.png",
+    images: [
+      "/assets/projects/dice-and-dares/screen-1.png",
+      "/assets/projects/dice-and-dares/screen-2.png"
+    ],
+    tags: ["Flutter", "Game UI", "Animation", "Mobile"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-pink-500/20 to-orange-500/20"
   },
 
   // GRAPHIC DESIGN PROJECTS
