@@ -162,6 +162,42 @@ export const projects: Project[] = [
     color: "from-stone-500/20 to-sky-500/20"
   },
   {
+    id: "notchhub",
+    title: "NotchHub",
+    description: "A macOS utility that transforms the MacBook notch into a productivity hub with media controls, file shelf, AI tools, and system stats. Distributed as a standalone .dmg — competes alongside NotchNook and BoringNotch.",
+    image: "/assets/projects/boot-alarm/cover.png",
+    tags: ["Swift", "SwiftUI", "AppKit", "macOS"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-gray-500/20 to-slate-500/20"
+  },
+  {
+    id: "pneumoscan",
+    title: "PneumoScan",
+    description: "Medical Android app enabling users to capture or upload chest X-rays and receive AI-powered pneumonia analysis results, with educational modules on symptoms, causes, and treatment.",
+    image: "/assets/projects/sensor-fusion/cover.jpg",
+    tags: ["Android", "Java", "CameraX", "AI"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-blue-500/20 to-teal-500/20"
+  },
+  {
+    id: "expense-tracker",
+    title: "Expense Tracker",
+    description: "Personal finance web app with category-based expense tracking and visual reports. Built with Next.js and TypeScript with a clean, offline-first approach.",
+    image: "/assets/projects/offline-resume/cover.png",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Finance"],
+    link: "#",
+    github: "#",
+    category: "software",
+    featured: false,
+    color: "from-emerald-500/20 to-green-500/20"
+  },
+  {
     id: "dice-and-dares",
     title: "Dice & Dares",
     description: "A playful Flutter party game with game modes, player setup, animated dice flows, truth/dare content, theme screens, AI prompt concepts, and store-ready visual assets.",
