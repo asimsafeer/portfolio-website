@@ -199,7 +199,7 @@ export function Contact() {
             >
               <h3 className="text-2xl font-bold mb-6">Contact Info</h3>
 
-              {contactInfo.map((info, i) => (
+              {contactInfo.map((info) => (
                 <motion.div
                   key={info.label}
                   variants={itemVariants}

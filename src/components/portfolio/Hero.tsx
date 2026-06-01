@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
-import { ArrowRight, Download, Code2, Database, Layout, Smartphone } from "lucide-react"
+import { ArrowRight, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useRef, useEffect, useState, MouseEvent } from "react"
 

@@ -1,8 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { ExternalLink, Github, Star, Play, Layout, Video, Palette, Code2, Eye, GitFork, Clock } from "lucide-react"
+import { ExternalLink, Github, Star, Play, Layout, Video, Palette, Code2, Eye } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useState, useEffect, useRef } from "react"
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { projects, type Project } from "@/lib/projects"
-import { fetchGitHubRepos, mapRepoToProject, formatDate, type GitHubRepo } from "@/lib/github"
+import { fetchGitHubRepos, mapRepoToProject, type GitHubRepo } from "@/lib/github"
 
 const categories = [
   { id: 'all', label: 'All Work', icon: Layout },
@@ -306,19 +307,21 @@ export function Projects() {
                     <div className="grid grid-cols-3 md:grid-cols-4 gap-2 bg-black/50 overflow-y-auto max-h-[400px] p-2">
                       {selectedProject.images.map((img, i) => (
                         <div key={i} className="aspect-video relative overflow-hidden group/img rounded-sm">
-                          <img
+                          <Image
                             src={img}
                             alt={`${selectedProject.title} - ${i + 1}`}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-110"
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover/img:scale-110"
                           />
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <img
+                    <Image
                       src={selectedProject.image}
                       alt={selectedProject.title}
-                      className="w-full h-full object-contain bg-black/20"
+                      fill
+                      className="object-contain bg-black/20"
                     />
                   )}
                 </div>
@@ -402,12 +405,10 @@ export function Projects() {
 // Separate component for better organization
 function ProjectCard({
   project,
-  index,
   onClick,
-  githubRepo
 }: {
   project: Project
-  index: number
+  index?: number
   onClick: () => void
   githubRepo?: GitHubRepo | null
 }) {
@@ -453,10 +454,11 @@ function ProjectCard({
                 </div>
               </div>
             ) : (
-              <img
+              <Image
                 src={project.image}
                 alt={project.title}
-                className={`w-full h-full transition-transform duration-700 group-hover:scale-110 object-cover ${project.category === 'videography' ? '' : ''}`}
+                fill
+                className={`transition-transform duration-700 group-hover:scale-110 object-cover ${project.category === 'videography' ? '' : ''}`}
               />
             )}
 
