@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { VisualEditsMessenger } from "orchids-visual-edits";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
@@ -15,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aasim Safeer | Project Coordinator & Developer",
-  description: "Portfolio of Aasim Safeer - Results-driven Project Coordinator & Full Stack Developer.",
+  title: "Aasim Safeer | Mobile & Web App Developer | Project Manager",
+  description: "Portfolio of Aasim Safeer — CS graduate who has built 15+ production apps across Flutter, Android, Swift, and Next.js, and an experienced Project Manager & Lead Coordinator.",
 };
 
 export default function RootLayout({
@@ -36,7 +35,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <VisualEditsMessenger />
         </ThemeProvider>
       </body>
     </html>
