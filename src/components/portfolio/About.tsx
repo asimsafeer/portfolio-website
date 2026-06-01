@@ -4,15 +4,18 @@ import { motion, useInView } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 
 const technicalSkills = [
-  "Flutter", "Dart", "Firebase", "Laravel", "PHP", "Next.js",
-  "TypeScript", "SQLite / Drift", "Riverpod / Provider", "REST APIs",
-  "PDF & Excel Exports", "Figma UI/UX", "GitHub", "Agile Delivery"
+  "Flutter & Dart", "Android (Java / Kotlin)", "Swift & SwiftUI",
+  "Next.js / React / TypeScript", "Python & ML / Data Science",
+  "Firebase", "SQLite / Drift", "Riverpod / Provider", "REST APIs",
+  "Git & Version Control", "Figma & UI/UX Design", "Agile & Scrum"
 ]
 
 const managerialSkills = [
-  "Project Management", "Product Planning", "Stakeholder Management",
-  "Sprint Planning", "Team Collaboration", "Risk Management",
-  "Requirement Gathering", "Documentation", "Problem Solving"
+  "Project Management & Coordination", "Cross-Functional Team Leadership",
+  "Stakeholder Management", "Executive Support", "Sprint & Agile Planning",
+  "Risk Identification & Problem Solving", "Workflow Optimisation",
+  "Data Analysis & Reporting", "Digital Project Delivery",
+  "Vendor Evaluation & Contract Coordination"
 ]
 
 const containerVariants = {
@@ -84,9 +87,9 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                I&apos;m a Computer Science graduate and project coordinator who has moved deeply into hands-on product
-                development. I build Flutter mobile apps, Laravel admin platforms, and Next.js web products while keeping
-                the delivery discipline I learned from coordinating real teams and client work.
+                I&apos;m a Computer Science graduate who has independently built 15+ production-ready mobile apps,
+                Android utilities, macOS tools, and web platforms — using Flutter, Dart, Swift, Kotlin, Next.js, Python,
+                and Firebase — while simultaneously working as a Project Manager &amp; Lead Coordinator.
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -94,9 +97,9 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                My strongest work sits where product thinking and implementation meet: Poul3y, Poultry Calculator,
-                Flock Manager, EduX, Nimbus AI, Sensor Fusion, and supporting dashboards. I handle UI/UX, app architecture,
-                feature planning, testing, documentation, and launch-ready presentation.
+                I combine hands-on engineering with strategic project oversight — equally capable of shipping production
+                apps (NimbusAI, EDU_X, Freezer, ScriptFlow, NotchHub) and leading cross-functional teams from
+                requirement gathering through delivery and stakeholder sign-off.
               </motion.p>
 
               <motion.div
@@ -126,7 +129,7 @@ export function About() {
                       viewport={{ once: true }}
                     >
                       <h4 className="font-semibold text-foreground">Diploma in Information Technology</h4>
-                      <p className="text-sm">Export IT & Solution</p>
+                      <p className="text-sm">Xpert IT Solution & Training</p>
                     </motion.div>
                   </div>
                 </div>
@@ -252,7 +255,7 @@ export function About() {
                 className="absolute bottom-0 left-0 right-0 p-6 z-20"
               >
                 <p className="text-white font-semibold text-lg">Aasim Safeer</p>
-                <p className="text-white/70 text-sm">Flutter Developer & Product Coordinator</p>
+                <p className="text-white/70 text-sm">Mobile & Web Developer | Project Manager</p>
               </motion.div>
 
               <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/20 pointer-events-none" />
@@ -296,8 +299,8 @@ export function About() {
               whileHover={{ scale: 1.05, x: -5 }}
               className="absolute top-1/2 -left-8 bg-background/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl"
             >
-              <p className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-primary bg-clip-text text-transparent"><AnimatedCounter value={10} />+</p>
-              <p className="text-xs text-muted-foreground">Projects Delivered</p>
+              <p className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-primary bg-clip-text text-transparent"><AnimatedCounter value={15} />+</p>
+              <p className="text-xs text-muted-foreground">Apps Built</p>
             </motion.div>
 
             <motion.div

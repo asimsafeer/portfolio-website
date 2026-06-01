@@ -19,9 +19,9 @@ const experiences = [
     ]
   },
   {
-    role: "Lead Project Coordinator",
+    role: "Project Coordinator",
     company: "Creative Engineering & Management Services",
-    period: "May 2023 – July 2024",
+    period: "May 2023 – July 2025",
     location: "Peshawar, Pakistan",
     description: "Managed daily task assignment and tracking for a cross functional team to ensure clarity and accountability.",
     highlights: [

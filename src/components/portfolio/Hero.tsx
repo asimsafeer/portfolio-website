@@ -158,7 +158,7 @@ export function Hero() {
           className="mb-6 inline-block"
         >
           <span className="px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium animate-pulse">
-            Flutter, Web & Product Delivery
+            Mobile & Web App Developer | Project Manager
           </span>
         </motion.div>
 
@@ -177,7 +177,7 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto"
         >
-          Project coordinator & developer, building Flutter apps, Laravel platforms, and Next.js products from idea to launch.
+          CS graduate who has built 15+ production apps across Flutter, Android, Swift, and Next.js — while leading cross-functional teams as Project Manager & Coordinator.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -222,7 +222,7 @@ export function Hero() {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="mt-16 flex items-center justify-center gap-8"
         >
-          {["React", "Flutter", "Figma", "Python"].map((tech, i) => (
+          {["Flutter", "Swift", "Next.js", "Python"].map((tech, i) => (
             <motion.div
               key={tech}
               initial={{ opacity: 0, y: 20 }}
