@@ -201,6 +201,20 @@ export const projects: Project[] = [
     featured: false,
     color: "from-teal-500 to-blue-600",
   },
+  {
+    id: "jarvis",
+    title: "Jarvis",
+    description: "Flutter voice AI assistant — text or speech commands routed through a Python Flask and OpenAI backend.",
+    icon: undefined,
+    image: "/icons/nimbus-ai.png",
+    platform: "Play Store",
+    tags: ["Flutter", "Python Flask", "OpenAI", "Speech-to-Text"],
+    link: "#",
+    github: "https://github.com/asimsafeer/Jarvis",
+    category: "mobile",
+    featured: false,
+    color: "from-cyan-500 to-blue-600",
+  },
   // ── WEB APPS ─────────────────────────────────────────────────────────────────
   {
     id: "portfolio-website",
@@ -229,6 +243,19 @@ export const projects: Project[] = [
     category: "web",
     featured: false,
     color: "from-emerald-500 to-green-600",
+  },
+  {
+    id: "virtual-assistant",
+    title: "Virtual Assistant",
+    description: "Python voice assistant with speech recognition and OpenAI queries — web browsing, music, and a Flask web UI.",
+    icon: undefined,
+    image: "/icons/expense-tracker.png",
+    tags: ["Python", "Flask", "OpenAI", "Speech Recognition"],
+    link: "#",
+    github: "https://github.com/asimsafeer/Virtual-Assistant",
+    category: "web",
+    featured: false,
+    color: "from-amber-500 to-orange-600",
   },
   // ── macOS ────────────────────────────────────────────────────────────────────
   {
