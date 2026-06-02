@@ -44,19 +44,6 @@ const experiences = [
     ],
   },
   {
-    role: "Flutter Developer & UI/UX Lead — Poul3y (Final Year Project)",
-    company: "City University of Science & Information Technology",
-    period: "October 2024 – June 2025",
-    location: "Peshawar, Pakistan",
-    description: "Conceptualised, designed, and developed a digital platform for modernising poultry industry management.",
-    highlights: [
-      "Managed full lifecycle from user requirement gathering to UI/UX, development, and testing using Flutter and GitHub.",
-      "Conducted stakeholder interviews and field research to align app features with real-world needs.",
-      "Reduced development time by 15% through efficient sprint planning.",
-      "Deployed a pilot version with 50+ users testing functionality in real market scenarios.",
-    ],
-  },
-  {
     role: "Business Auditor",
     company: "Creative Engineering & Management Services",
     period: "July 2024",

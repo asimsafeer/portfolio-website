@@ -129,6 +129,29 @@ export function About() {
                   <p className="font-semibold text-sm text-foreground">BS in Computer Science</p>
                   <p className="text-sm text-muted-foreground">City University of Science &amp; IT, Peshawar</p>
                   <p className="text-xs text-muted-foreground/70 mt-0.5">2021 — 2025</p>
+
+                  {/* Final Year Project */}
+                  <div className="mt-3 ml-3 pl-3 border-l border-primary/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary/80">Final Year Project</span>
+                    </div>
+                    <p className="font-semibold text-sm text-foreground">Poul3y — Digital Poultry Management Platform</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Flutter · Firebase · Figma · UI/UX</p>
+                    <p className="text-xs text-muted-foreground/70 mt-0.5">October 2024 – June 2025</p>
+                    <ul className="mt-2 space-y-1">
+                      {[
+                        "Led full lifecycle: requirements, UI/UX, development, and testing.",
+                        "Field research and stakeholder interviews to align features with real-world needs.",
+                        "Sprint planning reduced development time by 15%.",
+                        "Pilot deployed with 50+ users in live market scenarios.",
+                      ].map(h => (
+                        <li key={h} className="flex items-start gap-1.5 text-xs text-muted-foreground">
+                          <span className="mt-1.5 w-1 h-1 rounded-full bg-primary/50 flex-shrink-0" />
+                          {h}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
                 <div>
                   <p className="font-semibold text-sm text-foreground">Diploma in Information Technology</p>
