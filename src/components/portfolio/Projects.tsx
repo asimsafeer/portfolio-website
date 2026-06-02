@@ -1,517 +1,273 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { motion } from "framer-motion"
 import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { ExternalLink, Github, Star, Play, Layout, Video, Palette, Code2, Eye } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useState, useEffect, useRef } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { ExternalLink, Smartphone, Globe, Monitor, Palette, Video, ShoppingBag } from "lucide-react"
+import { useState } from "react"
 import { projects, type Project } from "@/lib/projects"
-import { fetchGitHubRepos, mapRepoToProject, type GitHubRepo } from "@/lib/github"
 
-const categories = [
-  { id: 'all', label: 'All Work', icon: Layout },
-  { id: 'software', label: 'UI/UX & Code', icon: Code2 },
-  { id: 'videography', label: 'Videography', icon: Video },
-  { id: 'design', label: 'Graphic Design', icon: Palette }
+// ── Category config ────────────────────────────────────────────────────────────
+const CATEGORIES = [
+  { id: "all",        label: "All Projects" },
+  { id: "mobile",     label: "Mobile Apps" },
+  { id: "web",        label: "Web" },
+  { id: "macos",      label: "macOS" },
+  { id: "design",     label: "Design" },
+  { id: "videography",label: "Video" },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
+// ── Icon placeholder gradient map ─────────────────────────────────────────────
+function CategoryIcon({ category }: { category: Project["category"] }) {
+  const icons = {
+    mobile: Smartphone,
+    web: Globe,
+    macos: Monitor,
+    design: Palette,
+    videography: Video,
   }
+  const Icon = icons[category] ?? Smartphone
+  return <Icon className="w-8 h-8 text-white/80" />
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5
-    }
-  }
-}
-
-// 3D tilt effect hook
-function use3DTilt() {
-  const ref = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    const rotateX = (y - centerY) / 20
-    const rotateY = (centerX - x) / 20
-
-    ref.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
-  }
-
-  const handleMouseLeave = () => {
-    if (!ref.current) return
-    ref.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'
-  }
-
-  return { ref, handleMouseMove, handleMouseLeave }
-}
-
-// Loading skeleton component
-function ProjectSkeleton() {
+// ── Platform badge ────────────────────────────────────────────────────────────
+function PlatformBadge({ platform }: { platform: string }) {
   return (
-    <div className="h-full">
-      <Card className="overflow-hidden border border-white/5 bg-background/50 h-full flex flex-col">
-        <div className="aspect-video skeleton" />
-        <CardHeader>
-          <div className="flex flex-wrap gap-2 mb-3">
-            <div className="h-5 w-16 skeleton rounded-full" />
-            <div className="h-5 w-20 skeleton rounded-full" />
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-semibold">
+      <ShoppingBag className="w-2.5 h-2.5" />
+      {platform}
+    </span>
+  )
+}
+
+// ── Single project card ────────────────────────────────────────────────────────
+function ProjectCard({ project }: { project: Project }) {
+  const hasExternalLink = project.link !== "#"
+
+  return (
+    <div className="group relative flex flex-col bg-background rounded-2xl border border-border/60 p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
+
+      {/* App Icon */}
+      <div className="w-20 h-20 mx-auto mb-4 rounded-[22px] overflow-hidden shadow-lg ring-1 ring-black/8 flex-shrink-0 bg-gradient-to-br from-muted to-muted-foreground/20">
+        {project.icon ? (
+          <Image
+            src={project.icon}
+            alt={project.title}
+            width={80}
+            height={80}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className={`w-full h-full bg-gradient-to-br ${project.color} flex items-center justify-center`}>
+            <CategoryIcon category={project.category} />
           </div>
-          <div className="h-6 w-3/4 skeleton rounded" />
-        </CardHeader>
-        <CardContent className="flex-1">
-          <div className="space-y-2">
-            <div className="h-4 w-full skeleton rounded" />
-            <div className="h-4 w-5/6 skeleton rounded" />
-            <div className="h-4 w-4/6 skeleton rounded" />
-          </div>
-        </CardContent>
-      </Card>
+        )}
+      </div>
+
+      {/* Title + platform */}
+      <div className="text-center mb-2">
+        <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">
+          {project.title}
+        </h3>
+        {project.platform && <PlatformBadge platform={project.platform} />}
+      </div>
+
+      {/* Tech tags */}
+      <p className="text-center text-[10px] text-muted-foreground/70 mb-3 leading-relaxed">
+        {project.tags.slice(0, 3).join(" · ")}
+      </p>
+
+      {/* Description */}
+      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 text-center flex-1">
+        {project.description.split(".")[0]}.
+      </p>
+
+      {/* External link */}
+      {hasExternalLink && (
+        <div className="mt-4 text-center">
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
+          >
+            View <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+      )}
+
+      {/* Category label bottom */}
+      <div className="mt-3 pt-3 border-t border-border/40 text-center">
+        <span className="text-[9px] uppercase tracking-widest text-muted-foreground/50 font-medium">
+          {project.category === "videography" ? "video" : project.category}
+        </span>
+      </div>
     </div>
   )
 }
 
-export function Projects() {
-  const router = useRouter()
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [githubProjects, setGithubProjects] = useState<Project[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [githubRepos, setGithubRepos] = useState<GitHubRepo[]>([])
-
-  // Fetch GitHub repos when GitHub category is selected
-  useEffect(() => {
-    async function loadGitHubRepos() {
-      if (githubProjects.length > 0) return // Already loaded
-
-      setIsLoading(true)
-      try {
-        const repos = await fetchGitHubRepos()
-        setGithubRepos(repos)
-        const mappedProjects = repos.map(mapRepoToProject)
-        setGithubProjects(mappedProjects)
-      } catch (error) {
-        console.error('Failed to load GitHub repos:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    if (activeCategory === 'software' || activeCategory === 'all') {
-      loadGitHubRepos()
-    }
-  }, [activeCategory, githubProjects.length])
-
-  // Combine all projects
-  const allProjects = [...projects, ...githubProjects]
-
-  const filteredProjects = allProjects.filter(project => {
-    if (activeCategory === 'all') return true
-    if (activeCategory === 'software') {
-      // Include both software projects and GitHub repos
-      return project.category === 'software' || project.category === 'github'
-    }
-    return project.category === activeCategory
-  })
-
-  const handleProjectClick = (project: Project) => {
-    if (project.category === 'design' || project.category === 'videography') {
-      router.push(`/projects/${project.id}`)
-    } else {
-      setSelectedProject(project)
-    }
-  }
-
-  // Get GitHub repo info for selected project
-  const getGitHubRepoInfo = (project: Project) => {
-    if (!project.id.startsWith('github-')) return null
-    const repoName = project.id.replace('github-', '').replace(/-/g, ' ')
-    return githubRepos.find(r => r.name.toLowerCase().replace(/-/g, ' ') === repoName)
-  }
-
+// ── Design / Videography wide card ────────────────────────────────────────────
+function MediaCard({ project }: { project: Project }) {
+  const hasLink = project.link !== "#"
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/30 to-background" />
-
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-primary/20"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 10 * (i % 2 === 0 ? 1 : -1), 0],
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
+    <div className="group relative bg-background rounded-2xl border border-border/60 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
+      {/* Cover */}
+      <div className={`h-40 bg-gradient-to-br ${project.color} relative overflow-hidden`}>
+        {project.image && (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-contain p-6 opacity-80"
           />
-        ))}
-      </div>
-
-      <div className="container px-4 mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-          >
-            <Star className="w-4 h-4 text-primary animate-pulse" />
-            <span className="text-sm font-medium text-primary">Portfolio Showcase</span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold mb-4"
-          >
-            <span className="bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text">
-              Selected Works
-            </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            A practical collection of Flutter apps, Laravel platforms, Next.js products,
-            UI/UX systems, and supporting creative work.
-          </motion.p>
+        )}
+        <div className="absolute top-3 right-3">
+          <span className="px-2 py-1 rounded-full bg-black/30 text-white text-[10px] font-semibold uppercase tracking-wide backdrop-blur-sm">
+            {project.category}
+          </span>
         </div>
-
-        {/* Category Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-4 mb-16"
-        >
-          {categories.map((category, index) => {
-            const Icon = category.icon
-            return (
-              <motion.button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full border transition-all duration-300 ${activeCategory === category.id
-                  ? "bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105"
-                  : "bg-background/50 border-white/10 text-muted-foreground hover:border-primary/50 hover:text-primary"
-                  }`}
-              >
-                <Icon className="w-4 h-4" />
-                <span className="text-sm font-semibold">{category.label}</span>
-                {category.id === 'github' && githubProjects.length > 0 && (
-                  <span className="ml-1 px-2 py-0.5 text-xs rounded-full bg-primary/20">
-                    {githubProjects.length}
-                  </span>
-                )}
-              </motion.button>
-            )
-          })}
-        </motion.div>
-
-        <motion.div
-          layout
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {/* Show loading skeletons */}
-          {isLoading && activeCategory === 'github' && (
-            <>
-              <ProjectSkeleton />
-              <ProjectSkeleton />
-              <ProjectSkeleton />
-            </>
-          )}
-
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
-              <ProjectCard
-                key={`${project.category}-${project.title}`}
-                project={project}
-                index={index}
-                onClick={() => handleProjectClick(project)}
-                githubRepo={getGitHubRepoInfo(project)}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Project Detail Modal */}
-        <Dialog open={!!selectedProject} onOpenChange={(open) => !open && setSelectedProject(null)}>
-          <DialogContent className="max-w-6xl p-0 overflow-hidden bg-background/95 backdrop-blur-xl border-white/10 max-h-[90vh] overflow-y-auto">
-            {selectedProject && (
-              <motion.div
-                className="flex flex-col"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="aspect-video w-full relative bg-black">
-                  {selectedProject.video ? (
-                    <video
-                      src={selectedProject.video}
-                      className="w-full h-full object-contain"
-                      controls
-                      autoPlay
-                    />
-                  ) : selectedProject.images ? (
-                    <div className="grid grid-cols-3 md:grid-cols-4 gap-2 bg-black/50 overflow-y-auto max-h-[400px] p-2">
-                      {selectedProject.images.map((img, i) => (
-                        <div key={i} className="aspect-video relative overflow-hidden group/img rounded-sm">
-                          <Image
-                            src={img}
-                            alt={`${selectedProject.title} - ${i + 1}`}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover/img:scale-110"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <Image
-                      src={selectedProject.image}
-                      alt={selectedProject.title}
-                      fill
-                      className="object-contain bg-black/20"
-                    />
-                  )}
-                </div>
-
-                <div className="p-8">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-                    <div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <Badge className="capitalize">{selectedProject.category}</Badge>
-                        <div className="flex gap-1">
-                          {selectedProject.tags.map(tag => (
-                            <Badge key={tag} variant="outline" className="text-[10px]">{tag}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <DialogTitle className="text-3xl font-bold">{selectedProject.title}</DialogTitle>
-                    </div>
-
-                    <div className="flex gap-3">
-                      {selectedProject.link !== "#" && (
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button asChild>
-                            <a href={selectedProject.link} target="_blank" rel="noreferrer" className="gap-2">
-                              <ExternalLink className="w-4 h-4" />
-                              {(selectedProject.category === 'software' || selectedProject.category === 'design') ? 'View Prototype' : 'Live Demo'}
-                            </a>
-                          </Button>
-                        </motion.div>
-                      )}
-                      {selectedProject.github !== "#" && (
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button variant="outline" asChild>
-                            <a href={selectedProject.github} target="_blank" rel="noreferrer" className="gap-2">
-                              <Github className="w-4 h-4" />
-                              View Source
-                            </a>
-                          </Button>
-                        </motion.div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="prose prose-invert max-w-none">
-                    <DialogDescription className="text-lg text-muted-foreground leading-relaxed">
-                      {selectedProject.description}
-                    </DialogDescription>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-8 border-t border-white/10">
-                      <div>
-                        <h4 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">Core Technologies</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {selectedProject.tags.map(tag => (
-                            <motion.div
-                              key={tag}
-                              className="px-3 py-1 rounded-md bg-secondary text-secondary-foreground text-sm border border-white/5"
-                              whileHover={{ scale: 1.05, y: -2 }}
-                            >
-                              {tag}
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">Project Focus</h4>
-                        <p className="text-sm text-muted-foreground">
-                          This project highlights expertise in {selectedProject.category === 'software' ? 'full-stack development and system architecture' : selectedProject.category === 'videography' ? 'visual storytelling and cinematic production' : selectedProject.category === 'github' ? 'open-source development and code collaboration' : 'brand identity and visual communication'}.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </DialogContent>
-        </Dialog>
       </div>
-    </section>
+      {/* Info */}
+      <div className="p-5">
+        <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-3">{project.description.split(".")[0]}.</p>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.slice(0, 2).map(t => (
+              <span key={t} className="px-2 py-0.5 rounded-full bg-secondary/50 text-[10px] text-muted-foreground border border-border/50">{t}</span>
+            ))}
+          </div>
+          {hasLink && (
+            <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline font-medium">
+              View <ExternalLink className="w-3 h-3" />
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 
-// Separate component for better organization
-function ProjectCard({
-  project,
-  onClick,
-}: {
-  project: Project
-  index?: number
-  onClick: () => void
-  githubRepo?: GitHubRepo | null
-}) {
-  const { ref, handleMouseMove, handleMouseLeave } = use3DTilt()
+// ── Main section ──────────────────────────────────────────────────────────────
+export function Projects() {
+  const [active, setActive] = useState("all")
+
+  const filtered = projects.filter(p => {
+    if (active === "all") return true
+    return p.category === active
+  })
+
+  const appProjects  = filtered.filter(p => p.category === "mobile" || p.category === "web" || p.category === "macos")
+  const mediaProjects = filtered.filter(p => p.category === "design" || p.category === "videography")
+
+  const showApps  = active === "all" || ["mobile","web","macos"].includes(active)
+  const showMedia = active === "all" || ["design","videography"].includes(active)
 
   return (
-    <motion.div
-      layout
-      variants={cardVariants}
-      initial="hidden"
-      animate="visible"
-      exit={{ opacity: 0, scale: 0.8 }}
-    >
-      <div
-        ref={ref}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="h-full cursor-pointer transition-transform duration-300 ease-out"
-        onClick={onClick}
-      >
-        <Card className={`group overflow-hidden border border-white/5 bg-background/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 h-full flex flex-col relative ${project.featured ? 'ring-1 ring-primary/20' : ''}`}>
-          <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+    <section id="projects" className="py-24">
+      <div className="container px-4 mx-auto">
 
-          <div className="aspect-video overflow-hidden relative">
-            {project.video ? (
-              <div className="w-full h-full relative">
-                <video
-                  src={project.video}
-                  poster={project.image}
-                  className="w-full h-full object-cover"
-                  muted
-                  loop
-                  playsInline
-                  onMouseOver={(e) => (e.target as HTMLVideoElement).play()}
-                  onMouseOut={(e) => {
-                    const v = e.target as HTMLVideoElement;
-                    v.pause();
-                    v.currentTime = 0;
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-colors">
-                  <Play className="w-12 h-12 text-white/50 group-hover:opacity-0 transition-opacity" />
-                </div>
-              </div>
-            ) : (
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className={`transition-transform duration-700 group-hover:scale-110 object-cover ${project.category === 'videography' ? '' : ''}`}
-              />
-            )}
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">Portfolio</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Projects &amp; Apps</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            15+ production-ready apps built across Flutter, Android, Swift, Next.js, and more.
+          </p>
+        </motion.div>
 
-            <div className="absolute top-4 left-4 z-20">
-              <Badge variant="outline" className="bg-background/80 backdrop-blur-sm border-white/10 capitalize">
-                {project.category}
-              </Badge>
-            </div>
-
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 z-30">
-              {project.category === 'videography' ? (
-                <motion.div
-                  className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <Play className="w-5 h-5 fill-current" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <Eye className="w-5 h-5" />
-                </motion.div>
+        {/* Category filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-2 mb-12"
+        >
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActive(cat.id)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                active === cat.id
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "bg-background border border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
+              }`}
+            >
+              {cat.label}
+              {active === cat.id && (
+                <span className="ml-2 text-xs opacity-70">
+                  ({filtered.length})
+                </span>
               )}
-            </div>
-          </div>
+            </button>
+          ))}
+        </motion.div>
 
-          <CardHeader>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {project.tags.slice(0, 3).map((tag) => (
-                <Badge key={tag} variant="secondary" className="bg-primary/5 border-primary/10 text-[10px] uppercase">
-                  {tag}
-                </Badge>
+        {/* ── App Cards Grid ── */}
+        {showApps && appProjects.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true }}
+          >
+            {active === "all" && (
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+                Apps &amp; Software
+              </h3>
+            )}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-14">
+              {appProjects.map((project, i) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.3) }}
+                  viewport={{ once: true }}
+                >
+                  <ProjectCard project={project} />
+                </motion.div>
               ))}
             </div>
-            <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">
-              {project.title}
-            </CardTitle>
-          </CardHeader>
+          </motion.div>
+        )}
 
-          <CardContent className="flex-1">
-            <p className="text-muted-foreground text-sm line-clamp-3">
-              {project.description}
-            </p>
+        {/* ── Media / Design / Video Cards ── */}
+        {showMedia && mediaProjects.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true }}
+          >
+            {active === "all" && (
+              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+                Design &amp; Video
+              </h3>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {mediaProjects.map((project, i) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.07 }}
+                  viewport={{ once: true }}
+                >
+                  <MediaCard project={project} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-            {/* Last updated for GitHub projects */}
-            {/* Last updated hidden as requested */}
-          </CardContent>
-        </Card>
       </div>
-    </motion.div>
+    </section>
   )
 }

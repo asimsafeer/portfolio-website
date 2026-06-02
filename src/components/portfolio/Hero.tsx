@@ -1,256 +1,150 @@
 "use client"
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
-import { ArrowRight, Download } from "lucide-react"
+import { motion } from "framer-motion"
+import { ArrowRight, Download, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useRef, useEffect, useState, MouseEvent } from "react"
+import { useState, useEffect } from "react"
 
-
-
-// Helper functions
 function TypeWriter({ text, className }: { text: string; className?: string }) {
-  const [displayText, setDisplayText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [display, setDisplay] = useState("")
+  const [idx, setIdx] = useState(0)
 
   useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, 80);
-      return () => clearTimeout(timeout);
+    if (idx < text.length) {
+      const t = setTimeout(() => {
+        setDisplay(p => p + text[idx])
+        setIdx(p => p + 1)
+      }, 75)
+      return () => clearTimeout(t)
     }
-  }, [currentIndex, text]);
+  }, [idx, text])
 
   return (
     <span className={className}>
-      {displayText}
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity }}
-        className="inline-block w-[3px] h-[1em] bg-primary ml-1 align-middle"
-      />
+      {display}
+      <span className="inline-block w-[3px] h-[0.85em] bg-primary ml-1 align-middle animate-pulse" />
     </span>
-  );
+  )
 }
 
-function MagneticButton({ children, className }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springConfig = { damping: 15, stiffness: 150 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current!.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    x.set(middleX);
-    y.set(middleY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
+const STACK = ["Flutter & Dart", "Android / Kotlin", "Swift & SwiftUI", "Next.js", "Python & ML", "Firebase"]
 
 export function Hero() {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const scale = useTransform(scrollY, [0, 300], [1, 0.9]);
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-
-
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50" />
-
-        {/* Animated Orbs - Only render on client to avoid hydration mismatch */}
-        {mounted && (
-          <>
-            <motion.div
-              style={{ y: y1, x: -50 }}
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl"
-            />
-            <motion.div
-              style={{ y: y2, x: 50 }}
-              animate={{
-                scale: [1.2, 1, 1.2],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"
-            />
-
-            {/* Floating Particles */}
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-primary/30 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, Math.random() * 100 - 50],
-                  opacity: [0, 1, 0],
-                }}
-                transition={{
-                  duration: Math.random() * 5 + 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-            ))}
-          </>
-        )}
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Pure CSS background — zero JS cost */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/6 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/50 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)",
+            backgroundSize: "36px 36px",
+          }}
+        />
       </div>
 
-      <motion.div
-        style={{ opacity, scale }}
-        className="container relative z-10 px-4 text-center"
-      >
+      <div className="container relative z-10 px-6 text-center max-w-4xl mx-auto">
+        {/* Role badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-6 inline-block"
+          transition={{ duration: 0.4 }}
+          className="mb-8"
         >
-          <span className="px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium animate-pulse">
-            Mobile & Web App Developer | Project Manager
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/25 bg-primary/8 text-primary text-sm font-medium">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            Mobile &amp; Web App Developer · Project Manager
           </span>
         </motion.div>
 
+        {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl md:text-7xl font-bold mb-6 tracking-tight"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 tracking-tight leading-[1.05]"
         >
-          Hi, I&apos;m <TypeWriter text="Aasim Safeer" className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60" />
+          Hi, I&apos;m{" "}
+          <TypeWriter
+            text="Aasim Safeer"
+            className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-primary/50"
+          />
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto"
-        >
-          CS graduate who has built 15+ production apps across Flutter, Android, Swift, and Next.js — while leading cross-functional teams as Project Manager & Coordinator.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <MagneticButton>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" className="rounded-full h-14 px-10 group text-lg relative overflow-hidden" asChild>
-                <a href="#projects">
-                  <span className="relative z-10 flex items-center">
-                    View Projects
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-primary via-chart-1 to-primary bg-[length:200%_100%]"
-                    animate={{ backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  />
-                </a>
-              </Button>
-            </motion.div>
-          </MagneticButton>
-
-          <MagneticButton>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" variant="outline" className="rounded-full h-14 px-10 group text-lg border-2 hover:border-primary transition-colors" asChild>
-                <a href="/aasim-safeer-cv.pdf" download>
-                  Download CV
-                  <Download className="ml-2 w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
-                </a>
-              </Button>
-            </motion.div>
-          </MagneticButton>
-        </motion.div>
-
-        {/* Tech stack floating icons */}
+        {/* Location */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-16 flex items-center justify-center gap-8"
+          transition={{ delay: 0.35 }}
+          className="flex items-center justify-center gap-1.5 text-muted-foreground mb-5"
         >
-          {["Flutter", "Swift", "Next.js", "Python"].map((tech, i) => (
-            <motion.div
+          <MapPin className="w-3.5 h-3.5" />
+          <span className="text-sm">Peshawar, Pakistan</span>
+        </motion.div>
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-muted-foreground mb-10 max-w-2xl mx-auto text-base md:text-lg leading-relaxed"
+        >
+          CS graduate who has independently built <strong className="text-foreground font-semibold">15+ production-ready apps</strong> across
+          Flutter, Android, Swift &amp; Next.js — while simultaneously leading teams as a
+          Project Manager &amp; Lead Coordinator.
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.42 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
+        >
+          <Button size="lg" className="h-12 px-8 rounded-full shadow-md text-base" asChild>
+            <a href="#projects">
+              View Projects <ArrowRight className="ml-2 w-4 h-4" />
+            </a>
+          </Button>
+          <Button size="lg" variant="outline" className="h-12 px-8 rounded-full text-base" asChild>
+            <a href="/aasim-safeer-cv.pdf" download>
+              Download CV <Download className="ml-2 w-4 h-4" />
+            </a>
+          </Button>
+        </motion.div>
+
+        {/* Tech stack */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="flex flex-wrap items-center justify-center gap-2"
+        >
+          {STACK.map((tech) => (
+            <span
               key={tech}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 + i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.1 }}
-              className="px-4 py-2 rounded-full bg-muted/50 border border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all cursor-default"
+              className="px-3 py-1.5 rounded-full bg-secondary/60 border border-border/60 text-xs text-muted-foreground font-medium hover:border-primary/40 hover:text-foreground transition-colors"
             >
               {tech}
-            </motion.div>
+            </span>
           ))}
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ delay: 1.1, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
       >
-        <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-px h-12 bg-linear-to-b from-border to-transparent"
-        />
+        <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">Scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-muted-foreground/40 to-transparent" />
       </motion.div>
-    </section >
+    </section>
   )
 }
