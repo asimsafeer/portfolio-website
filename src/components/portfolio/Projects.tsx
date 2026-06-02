@@ -15,7 +15,7 @@ const CATEGORIES = [
   { id: "design", label: "Design" },
 ]
 
-// ── Icon placeholder ───────────────────────────────────────────────────────────
+// ── Category icon ──────────────────────────────────────────────────────────────
 function CategoryIcon({ category }: { category: Project["category"] }) {
   const icons = {
     mobile: Smartphone,
@@ -41,10 +41,10 @@ function PlatformBadge({ platform }: { platform: string }) {
 // ── Single project card ────────────────────────────────────────────────────────
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="group relative flex flex-col min-h-[260px] bg-background rounded-2xl border border-border/60 p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-200">
+    <div className="group relative flex flex-col min-h-[260px] bg-background rounded-2xl border border-border/60 p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200 cursor-default">
 
-      {/* App Icon */}
-      <div className="w-20 h-20 mx-auto mb-4 rounded-[22px] overflow-hidden shadow-lg ring-1 ring-black/8 flex-shrink-0 bg-gradient-to-br from-muted to-muted-foreground/20">
+      {/* App Icon — scales up on card hover */}
+      <div className="w-20 h-20 mx-auto mb-4 rounded-[22px] overflow-hidden shadow-lg ring-1 ring-black/8 flex-shrink-0 bg-gradient-to-br from-muted to-muted-foreground/20 group-hover:ring-2 group-hover:ring-primary/20 transition-all duration-200 group-hover:scale-110">
         {project.icon ? (
           <Image
             src={project.icon}
@@ -62,7 +62,7 @@ function ProjectCard({ project }: { project: Project }) {
 
       {/* Title + platform */}
       <div className="text-center mb-2 flex-shrink-0">
-        <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">
+        <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors duration-150">
           {project.title}
         </h3>
         {project.platform && <PlatformBadge platform={project.platform} />}
@@ -73,7 +73,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.tags.slice(0, 3).join(" · ")}
       </p>
 
-      {/* Description — fills remaining space, clips cleanly without "…" */}
+      {/* Description */}
       <p className="text-xs text-muted-foreground leading-relaxed text-center flex-1 overflow-hidden">
         {project.description}
       </p>
@@ -92,7 +92,7 @@ function ProjectCard({ project }: { project: Project }) {
 function MediaCard({ project }: { project: Project }) {
   const hasLink = project.link !== "#"
   return (
-    <div className="group relative bg-background rounded-2xl border border-border/60 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-200">
+    <div className="group relative bg-background rounded-2xl border border-border/60 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
       {/* Cover */}
       <div className={`h-40 bg-gradient-to-br ${project.color} relative overflow-hidden`}>
         {project.image && (
@@ -100,7 +100,7 @@ function MediaCard({ project }: { project: Project }) {
             src={project.image}
             alt={project.title}
             fill
-            className="object-contain p-6 opacity-80"
+            className="object-contain p-6 opacity-80 group-hover:scale-105 transition-transform duration-300"
           />
         )}
         <div className="absolute top-3 right-3">
@@ -120,7 +120,12 @@ function MediaCard({ project }: { project: Project }) {
             ))}
           </div>
           {hasLink && (
-            <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline font-medium">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline font-medium"
+            >
               View <ExternalLink className="w-3 h-3" />
             </a>
           )}
@@ -130,11 +135,14 @@ function MediaCard({ project }: { project: Project }) {
   )
 }
 
+// ── Spring config shared ───────────────────────────────────────────────────────
+const cardSpring = { type: "spring", stiffness: 340, damping: 22 } as const
+const btnSpring  = { type: "spring", stiffness: 420, damping: 18 } as const
+
 // ── Main section ───────────────────────────────────────────────────────────────
 export function Projects() {
   const [active, setActive] = useState("all")
 
-  // Videography is excluded from the public-facing portfolio
   const visibleProjects = projects.filter(p => p.category !== "videography")
 
   const filtered = visibleProjects.filter(p =>
@@ -166,7 +174,7 @@ export function Projects() {
           </p>
         </motion.div>
 
-        {/* Category filter — animated pill slides between buttons */}
+        {/* Category filter — animated spring pill */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -176,16 +184,18 @@ export function Projects() {
         >
           <LayoutGroup id="projects-filter">
             {CATEGORIES.map(cat => (
-              <button
+              <motion.button
                 key={cat.id}
                 onClick={() => setActive(cat.id)}
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                transition={btnSpring}
                 className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-150 ${
                   active === cat.id
                     ? "text-primary-foreground"
                     : "bg-background border border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
                 }`}
               >
-                {/* Animated background pill */}
                 {active === cat.id && (
                   <motion.span
                     layoutId="filter-pill"
@@ -199,7 +209,7 @@ export function Projects() {
                     <span className="ml-2 text-xs opacity-70">({filtered.length})</span>
                   )}
                 </span>
-              </button>
+              </motion.button>
             ))}
           </LayoutGroup>
         </motion.div>
@@ -225,6 +235,7 @@ export function Projects() {
                     initial={{ opacity: 0, y: 18, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                    whileHover={{ y: -6, scale: 1.02, transition: cardSpring }}
                     transition={{ duration: 0.22, delay: Math.min(i * 0.04, 0.2) }}
                   >
                     <ProjectCard project={project} />
@@ -256,6 +267,7 @@ export function Projects() {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
+                    whileHover={{ y: -6, scale: 1.01, transition: cardSpring }}
                     transition={{ duration: 0.22, delay: i * 0.07 }}
                   >
                     <MediaCard project={project} />
