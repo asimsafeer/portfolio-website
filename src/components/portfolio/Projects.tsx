@@ -1,35 +1,34 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
 import Image from "next/image"
-import { ExternalLink, Smartphone, Globe, Monitor, Palette, Video, ShoppingBag } from "lucide-react"
+import { ExternalLink, Smartphone, Globe, Monitor, Palette, ShoppingBag } from "lucide-react"
 import { useState } from "react"
 import { projects, type Project } from "@/lib/projects"
 
 // ── Category config ────────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { id: "all",        label: "All Projects" },
-  { id: "mobile",     label: "Mobile Apps" },
-  { id: "web",        label: "Web" },
-  { id: "macos",      label: "macOS" },
-  { id: "design",     label: "Design" },
-  { id: "videography",label: "Video" },
+  { id: "all",    label: "All Projects" },
+  { id: "mobile", label: "Mobile Apps" },
+  { id: "web",    label: "Web" },
+  { id: "macos",  label: "macOS" },
+  { id: "design", label: "Design" },
 ]
 
-// ── Icon placeholder gradient map ─────────────────────────────────────────────
+// ── Icon placeholder ───────────────────────────────────────────────────────────
 function CategoryIcon({ category }: { category: Project["category"] }) {
   const icons = {
     mobile: Smartphone,
     web: Globe,
     macos: Monitor,
     design: Palette,
-    videography: Video,
+    videography: Palette,
   }
   const Icon = icons[category] ?? Smartphone
-  return <Icon className="w-8 h-8 text-white/80" />
+  return <Icon className="w-7 h-7 text-white/80" />
 }
 
-// ── Platform badge ────────────────────────────────────────────────────────────
+// ── Platform badge ─────────────────────────────────────────────────────────────
 function PlatformBadge({ platform }: { platform: string }) {
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-semibold">
@@ -41,10 +40,8 @@ function PlatformBadge({ platform }: { platform: string }) {
 
 // ── Single project card ────────────────────────────────────────────────────────
 function ProjectCard({ project }: { project: Project }) {
-  const hasExternalLink = project.link !== "#"
-
   return (
-    <div className="group relative flex flex-col bg-background rounded-2xl border border-border/60 p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
+    <div className="group relative flex flex-col min-h-[260px] bg-background rounded-2xl border border-border/60 p-5 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-200">
 
       {/* App Icon */}
       <div className="w-20 h-20 mx-auto mb-4 rounded-[22px] overflow-hidden shadow-lg ring-1 ring-black/8 flex-shrink-0 bg-gradient-to-br from-muted to-muted-foreground/20">
@@ -64,7 +61,7 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Title + platform */}
-      <div className="text-center mb-2">
+      <div className="text-center mb-2 flex-shrink-0">
         <h3 className="font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors">
           {project.title}
         </h3>
@@ -72,44 +69,30 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Tech tags */}
-      <p className="text-center text-[10px] text-muted-foreground/70 mb-3 leading-relaxed">
+      <p className="text-center text-[10px] text-muted-foreground/70 mb-3 leading-relaxed flex-shrink-0">
         {project.tags.slice(0, 3).join(" · ")}
       </p>
 
-      {/* Description */}
-      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 text-center flex-1">
-        {project.description.split(".")[0]}.
+      {/* Description — fills remaining space, clips cleanly without "…" */}
+      <p className="text-xs text-muted-foreground leading-relaxed text-center flex-1 overflow-hidden">
+        {project.description}
       </p>
 
-      {/* External link */}
-      {hasExternalLink && (
-        <div className="mt-4 text-center">
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
-          >
-            View <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-      )}
-
-      {/* Category label bottom */}
-      <div className="mt-3 pt-3 border-t border-border/40 text-center">
+      {/* Category label */}
+      <div className="mt-3 pt-3 border-t border-border/40 text-center flex-shrink-0">
         <span className="text-[9px] uppercase tracking-widest text-muted-foreground/50 font-medium">
-          {project.category === "videography" ? "video" : project.category}
+          {project.category}
         </span>
       </div>
     </div>
   )
 }
 
-// ── Design / Videography wide card ────────────────────────────────────────────
+// ── Design wide card ───────────────────────────────────────────────────────────
 function MediaCard({ project }: { project: Project }) {
   const hasLink = project.link !== "#"
   return (
-    <div className="group relative bg-background rounded-2xl border border-border/60 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
+    <div className="group relative bg-background rounded-2xl border border-border/60 overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-200">
       {/* Cover */}
       <div className={`h-40 bg-gradient-to-br ${project.color} relative overflow-hidden`}>
         {project.image && (
@@ -129,7 +112,7 @@ function MediaCard({ project }: { project: Project }) {
       {/* Info */}
       <div className="p-5">
         <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
-        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-3">{project.description.split(".")[0]}.</p>
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-3">{project.description}</p>
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap gap-1.5">
             {project.tags.slice(0, 2).map(t => (
@@ -147,20 +130,22 @@ function MediaCard({ project }: { project: Project }) {
   )
 }
 
-// ── Main section ──────────────────────────────────────────────────────────────
+// ── Main section ───────────────────────────────────────────────────────────────
 export function Projects() {
   const [active, setActive] = useState("all")
 
-  const filtered = projects.filter(p => {
-    if (active === "all") return true
-    return p.category === active
-  })
+  // Videography is excluded from the public-facing portfolio
+  const visibleProjects = projects.filter(p => p.category !== "videography")
 
-  const appProjects  = filtered.filter(p => p.category === "mobile" || p.category === "web" || p.category === "macos")
-  const mediaProjects = filtered.filter(p => p.category === "design" || p.category === "videography")
+  const filtered = visibleProjects.filter(p =>
+    active === "all" ? true : p.category === active
+  )
 
-  const showApps  = active === "all" || ["mobile","web","macos"].includes(active)
-  const showMedia = active === "all" || ["design","videography"].includes(active)
+  const appProjects   = filtered.filter(p => ["mobile", "web", "macos"].includes(p.category))
+  const mediaProjects = filtered.filter(p => p.category === "design")
+
+  const showApps  = active === "all" || ["mobile", "web", "macos"].includes(active)
+  const showMedia = active === "all" || active === "design"
 
   return (
     <section id="projects" className="py-24">
@@ -181,7 +166,7 @@ export function Projects() {
           </p>
         </motion.div>
 
-        {/* Category filter */}
+        {/* Category filter — animated pill slides between buttons */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -189,82 +174,96 @@ export function Projects() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-2 mb-12"
         >
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => setActive(cat.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                active === cat.id
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "bg-background border border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
-              }`}
-            >
-              {cat.label}
-              {active === cat.id && (
-                <span className="ml-2 text-xs opacity-70">
-                  ({filtered.length})
+          <LayoutGroup id="projects-filter">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => setActive(cat.id)}
+                className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-150 ${
+                  active === cat.id
+                    ? "text-primary-foreground"
+                    : "bg-background border border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
+                }`}
+              >
+                {/* Animated background pill */}
+                {active === cat.id && (
+                  <motion.span
+                    layoutId="filter-pill"
+                    className="absolute inset-0 rounded-full bg-primary shadow-md"
+                    transition={{ type: "spring", bounce: 0.18, duration: 0.38 }}
+                  />
+                )}
+                <span className="relative z-10">
+                  {cat.label}
+                  {active === cat.id && (
+                    <span className="ml-2 text-xs opacity-70">({filtered.length})</span>
+                  )}
                 </span>
-              )}
-            </button>
-          ))}
+              </button>
+            ))}
+          </LayoutGroup>
         </motion.div>
 
         {/* ── App Cards Grid ── */}
         {showApps && appProjects.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            viewport={{ once: true }}
-          >
+          <div className="mb-14">
             {active === "all" && (
-              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
+              <motion.h3
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5"
+              >
                 Apps &amp; Software
-              </h3>
+              </motion.h3>
             )}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-14">
-              {appProjects.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.3) }}
-                  viewport={{ once: true }}
-                >
-                  <ProjectCard project={project} />
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <AnimatePresence mode="popLayout">
+                {appProjects.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 18, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                    transition={{ duration: 0.22, delay: Math.min(i * 0.04, 0.2) }}
+                  >
+                    <ProjectCard project={project} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
-          </motion.div>
+          </div>
         )}
 
-        {/* ── Media / Design / Video Cards ── */}
+        {/* ── Design Cards ── */}
         {showMedia && mediaProjects.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            viewport={{ once: true }}
-          >
+          <div>
             {active === "all" && (
-              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5">
-                Design &amp; Video
-              </h3>
+              <motion.h3
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-5"
+              >
+                Design
+              </motion.h3>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mediaProjects.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: i * 0.07 }}
-                  viewport={{ once: true }}
-                >
-                  <MediaCard project={project} />
-                </motion.div>
-              ))}
+              <AnimatePresence mode="popLayout">
+                {mediaProjects.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.22, delay: i * 0.07 }}
+                  >
+                    <MediaCard project={project} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
-          </motion.div>
+          </div>
         )}
 
       </div>

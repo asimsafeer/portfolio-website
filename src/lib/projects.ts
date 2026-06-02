@@ -22,7 +22,7 @@ export const projects: Project[] = [
   {
     id: "nimbus-ai",
     title: "NimbusAi",
-    description: "Offline-first AI chatbot running Google Gemma 4 (1.5 GB) 100% on-device — zero cloud inference. Supports text chat, multimodal image Q&A, and voice-to-text, all fully offline.",
+    description: "On-device AI chatbot powered by Gemma 4 — text chat, image Q&A, and voice-to-text with zero cloud.",
     icon: "/icons/nimbus-ai.png",
     image: "/icons/nimbus-ai.png",
     tags: ["Flutter", "Gemma 4", "Riverpod", "Cloudflare R2"],
@@ -35,7 +35,7 @@ export const projects: Project[] = [
   {
     id: "edux",
     title: "EDU_X",
-    description: "Offline-first school management system: desktop hub + teacher Android app. Auto-discovers the hub on local WiFi via mDNS for end-of-day attendance sync. Covers fees, licensing, and multi-device sync.",
+    description: "Offline school hub with desktop and teacher apps, auto-synced over local WiFi using mDNS.",
     icon: undefined,
     image: "/icons/poul3y.png",
     tags: ["Flutter", "SQLite/Drift", "mDNS WiFi Sync"],
@@ -48,7 +48,7 @@ export const projects: Project[] = [
   {
     id: "freezer",
     title: "Freezer",
-    description: "Android app that freezes selected apps by blocking network access via a local VPN (no traffic leaves device) and suppressing notifications — fully Play Store compliant.",
+    description: "Blocks app network access via a local VPN and suppresses notifications — fully Play Store compliant.",
     icon: "/icons/freezer.png",
     image: "/icons/freezer.png",
     tags: ["Flutter", "Kotlin", "Android VpnService", "Hive"],
@@ -61,7 +61,7 @@ export const projects: Project[] = [
   {
     id: "scriptflow",
     title: "ScriptFlow",
-    description: "Floating teleprompter overlay for content creators that renders on top of any app using SYSTEM_ALERT_WINDOW. Auto-scrolls scripts with optional real-time speech following.",
+    description: "Floating teleprompter for content creators — overlays any app and auto-scrolls scripts with optional speech following.",
     icon: "/icons/scriptflow.png",
     image: "/icons/scriptflow.png",
     tags: ["Flutter", "Kotlin", "Android WindowManager", "Speech Recognition"],
@@ -74,7 +74,7 @@ export const projects: Project[] = [
   {
     id: "boot-alarm",
     title: "Boot Alarm",
-    description: "Smart alarm app for developers: must correctly answer programming MCQs (1,000+ questions across C++, Python, JS, ML/DL, Networking) to dismiss the alarm. Neumorphic UI.",
+    description: "Developer alarm: solve a programming MCQ to dismiss. Covers Python, C++, JS, ML, and Networking with a neumorphic UI.",
     icon: "/icons/boot-alarm.png",
     image: "/icons/boot-alarm.png",
     tags: ["Flutter", "sqflite", "Provider", "Neumorphic UI"],
@@ -87,7 +87,7 @@ export const projects: Project[] = [
   {
     id: "pneumoscan",
     title: "PneumoScan",
-    description: "Medical Android app: capture or upload a chest X-ray and receive AI-powered pneumonia analysis. Includes educational modules on symptoms, causes, treatment, and prevention.",
+    description: "AI chest X-ray analyser for pneumonia detection with built-in guidance on symptoms, causes, and treatment.",
     icon: "/icons/pneumoscan.png",
     image: "/icons/pneumoscan.png",
     tags: ["Android", "Java", "CameraX", "AI Inference"],
@@ -100,7 +100,7 @@ export const projects: Project[] = [
   {
     id: "poultry-calculator",
     title: "Poultry Calculator",
-    description: "Feed estimation app for poultry farmers: select bird type (broiler/layer), enter flock size, and instantly generate a shareable feed requirement receipt.",
+    description: "Feed calculator for poultry farmers — pick bird type and flock size to generate an instant shareable receipt.",
     icon: "/icons/poultry-calculator.png",
     image: "/icons/poultry-calculator.png",
     platform: "Play Store",
@@ -114,7 +114,7 @@ export const projects: Project[] = [
   {
     id: "offline-cv",
     title: "Offline CV Builder",
-    description: "Privacy-first offline resume builder: all data stays on device — no accounts, no servers, no third-party sharing. Multiple templates, PDF export, works 100% without internet.",
+    description: "Privacy-first offline resume builder with multiple templates and PDF export — no accounts or servers required.",
     icon: "/icons/offline-cv.png",
     image: "/icons/offline-cv.png",
     platform: "Play Store",
@@ -128,7 +128,7 @@ export const projects: Project[] = [
   {
     id: "promptly",
     title: "Promptly",
-    description: "Premium AI prompt gallery with 300+ curated prompts for image generation. Firebase backend, categorised browsing, and favourites system.",
+    description: "AI prompt gallery with 300+ curated prompts for image generation, category browsing, and a favourites system.",
     icon: "/icons/promptly.png",
     image: "/icons/promptly.png",
     tags: ["Flutter", "Firebase", "Riverpod"],
@@ -141,7 +141,7 @@ export const projects: Project[] = [
   {
     id: "dice-and-dares",
     title: "Dice & Dares",
-    description: "Party game combining dice rolls with dare challenges. Multiple themed modes, difficulty levels, and integrated Google Play Games achievements and leaderboards.",
+    description: "Dice and dare party game with multiple themed modes, difficulty levels, and Google Play Games achievements.",
     icon: "/icons/dice-and-dare.png",
     image: "/icons/dice-and-dare.png",
     tags: ["Flutter", "Google Play Games", "Provider"],
@@ -154,7 +154,7 @@ export const projects: Project[] = [
   {
     id: "poul3y",
     title: "Poul3y",
-    description: "Digital poultry management platform: real-time flock records, disease tracking, resource planning, PDF reports, and farmer-focused dashboards. Final Year Project.",
+    description: "Digital poultry platform with flock records, disease tracking, resource planning, and PDF reports.",
     icon: "/icons/poul3y.png",
     image: "/icons/poul3y.png",
     tags: ["Flutter", "Firebase", "Figma", "UI/UX"],
@@ -167,7 +167,7 @@ export const projects: Project[] = [
   {
     id: "flock-manager",
     title: "Flock Manager",
-    description: "Poultry flock operations system covering flock setup, mortality, feed, vaccines, medicine, warehouse, catching, recoveries, reporting, and shared access workflows.",
+    description: "Full-cycle poultry ops — flock setup, mortality, feed, vaccines, warehouse management, catching, and shared reporting.",
     icon: "/icons/flock-manager.png",
     image: "/icons/flock-manager.png",
     tags: ["Flutter", "Firebase", "Reports"],
@@ -180,7 +180,7 @@ export const projects: Project[] = [
   {
     id: "sensor-fusion",
     title: "Sensor Fusion",
-    description: "Research-grade Android app streaming multi-sensor data (accelerometer, gyroscope, GPS, barometer) to local servers or MQTT brokers. Per-sensor rate control up to 400 Hz.",
+    description: "Android app streaming accelerometer, gyroscope, GPS, and barometer data to MQTT or HTTP at up to 400 Hz.",
     icon: "/icons/sensor-fusion.png",
     image: "/icons/sensor-fusion.png",
     tags: ["Android", "Java", "MQTT", "HTTP"],
@@ -194,7 +194,7 @@ export const projects: Project[] = [
   {
     id: "portfolio-website",
     title: "Portfolio Website",
-    description: "Personal developer portfolio showcasing projects, skills, and experience. Built with Next.js, TypeScript, and Tailwind CSS with a responsive modern UI.",
+    description: "Developer portfolio built with Next.js and Tailwind CSS, showcasing projects, skills, and career.",
     icon: undefined,
     image: "/icons/poul3y.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
@@ -207,7 +207,7 @@ export const projects: Project[] = [
   {
     id: "expense-tracker",
     title: "Expense Tracker",
-    description: "Personal finance web app with category-based tracking and visual reports. Offline Resume Generator included — client-side resume builder that generates PDFs without a server.",
+    description: "Expense tracker with category-based reports, plus a client-side offline PDF resume generator.",
     icon: "/icons/expense-tracker.png",
     image: "/icons/expense-tracker.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
@@ -221,7 +221,7 @@ export const projects: Project[] = [
   {
     id: "notchhub",
     title: "NotchHub",
-    description: "macOS utility that transforms the MacBook notch into a productivity hub: media controls, file shelf, AI tools, and system stats. Competes with NotchNook, Alcove, and BoringNotch.",
+    description: "Turns the MacBook notch into a productivity hub: media controls, file shelf, AI tools, and live system stats.",
     icon: undefined,
     image: "/icons/nimbus-ai.png",
     platform: "macOS .dmg",
@@ -236,7 +236,7 @@ export const projects: Project[] = [
   {
     id: "cems-design",
     title: "CEMS Brand Identity",
-    description: "Complete visual identity and social media campaign for Creative Engineering & Management Services — hiring posts, branded templates, and consistent design language.",
+    description: "Full visual identity for CEMS — hiring posts, branded templates, and a consistent design language.",
     icon: undefined,
     image: "/assets/portfolio/AasimSafeer-Portfolio/CEMS Job Ads/Creative Engineering and Management Services Logo.png",
     images: [
@@ -255,7 +255,7 @@ export const projects: Project[] = [
   {
     id: "ecosun-design",
     title: "EcoSun Global Branding",
-    description: "Corporate branding package including brochures, business cards, and social media assets for a renewable energy company.",
+    description: "Corporate branding for EcoSun Global — brochures, business cards, and social media assets.",
     icon: undefined,
     image: "/assets/portfolio/AasimSafeer-Portfolio/EcoSun Global/Ecosun Global Logo.png",
     tags: ["Print Design", "Corporate Identity", "Canva"],
@@ -269,7 +269,7 @@ export const projects: Project[] = [
   {
     id: "florid-hotel",
     title: "Florid Hotel Cinematic",
-    description: "Series of cinematic promotional videos showcasing the luxury and ambiance of Florid Hotel — capturing the essence of hospitality through dynamic visual storytelling.",
+    description: "Cinematic promotional videos showcasing Florid Hotel's luxury and ambiance through dynamic visual storytelling.",
     icon: undefined,
     image: "/assets/portfolio/AasimSafeer-Portfolio/Florid Hotel/Florid Hotel Logo.png",
     video: "/assets/portfolio/AasimSafeer-Portfolio/Florid Hotel/lv_0_20241022195504.mp4",
@@ -283,7 +283,7 @@ export const projects: Project[] = [
   {
     id: "ecosun-video",
     title: "EcoSun Site Walkthrough",
-    description: "On-site promotional video documenting solar installation projects and company capabilities for EcoSun Global.",
+    description: "On-site promotional video documenting EcoSun Global's solar installations and company capabilities.",
     icon: undefined,
     image: "/assets/portfolio/AasimSafeer-Portfolio/EcoSun Global/Ecosun Global Logo.png",
     video: "/assets/portfolio/AasimSafeer-Portfolio/EcoSun Global/Site Videos/Peshawar Hotel.MP4",
