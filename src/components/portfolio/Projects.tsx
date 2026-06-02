@@ -30,9 +30,13 @@ function CategoryIcon({ category }: { category: Project["category"] }) {
 
 // ── Platform badge ─────────────────────────────────────────────────────────────
 function PlatformBadge({ platform }: { platform: string }) {
+  const isLive = platform === "Live"
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-semibold">
-      <ShoppingBag className="w-2.5 h-2.5" />
+      {isLive
+        ? <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+        : <ShoppingBag className="w-2.5 h-2.5" />
+      }
       {platform}
     </span>
   )
