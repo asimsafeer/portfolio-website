@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Aasim Safeer | Mobile & Web App Developer | Project Manager",
   description: "Portfolio of Aasim Safeer — CS graduate who has built 15+ production apps across Flutter, Android, Swift, and Next.js, and an experienced Project Manager & Lead Coordinator.",
+  verification: {
+    google: "ifLKRwx-o1N_Z9cHOheRhUxwxopZAhTou-OBOIkRrd8",
+  },
 };
 
 export default function RootLayout({
